@@ -1,0 +1,17 @@
+# Filter Clients by Date Range
+@app.route("/filter_by_date", methods=["GET"])
+def filter_by_date():
+    start_date = request.args.get("start_date")
+    end_date = request.args.get("end_date")
+
+    if start_date and end_date:
+        try:
+            start_date = datetime.strptime(start_date, "%Y-%m-%d")
+            end_date = datetime.strptime(end_date, "%Y-%m-%d")
+            clients = ClientVisit.query.filter(ClientVisit.visit_date.between(start_date, end_date)).all()
+        except ValueError:
+            return "Invalid date format. Please enter a valid date range.", 400
+    else:
+        clients = []
+
+    return render_template("filtered_clients.html", clients=clients, start_date=start_date.date(), end_date=end_date.date())
