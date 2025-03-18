@@ -100,19 +100,34 @@
             </div>
         </div>
 
+        <!-- 🌟 Clients Last Visited Between -->
         <div class="col-md-6">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h4>💰 Income Report</h4>
-                    <form action="/income_report" method="GET">
+                    <h4>📅 Clients Last Visited Between</h4>
+                    <form action="/last_visit_between" method="GET">
                         <div class="d-flex">
                             <input type="date" name="start_date" class="form-control me-2" required>
                             <input type="date" name="end_date" class="form-control me-2" required>
-                            <button type="submit" class="btn btn-info">📊 Generate Report</button>
+                            <button type="submit" class="btn btn-dark">🔍 Find Clients</button>
                         </div>
                     </form>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 💰 Income Report -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>💰 Income Report</h4>
+            <form action="/income_report" method="GET">
+                <div class="d-flex">
+                    <input type="date" name="start_date" class="form-control me-2" required>
+                    <input type="date" name="end_date" class="form-control me-2" required>
+                    <button type="submit" class="btn btn-info">📊 Generate Report</button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -143,7 +158,6 @@
         <div class="card-body">
             <h4>❌ Delete a Visit</h4>
             <form action="/delete_visit" method="GET">
-                <label for="delete_client_name">Client Name:</label>
                 <input type="text" id="delete_client_name" name="name" class="form-control mb-2" placeholder="Type to search..." required>
                 <button type="submit" class="btn btn-danger w-100">🔍 Find Visits</button>
             </form>
