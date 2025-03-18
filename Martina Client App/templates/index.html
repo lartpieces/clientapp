@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💖 Martina's Client Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <style>
+        /* Soft pastel color scheme */
+        body {
+            background-color: #FFF5FA;
+            font-family: 'Poppins', sans-serif;
+            color: #8B5E83;
+        }
+        h2, h3, h4 {
+            color: #D63384;
+            font-weight: bold;
+        }
+        .btn {
+            border-radius: 20px;
+            font-weight: 600;
+        }
+        .btn-primary { background-color: #FF85A2; border-color: #FF85A2; }
+        .btn-primary:hover { background-color: #E76F92; }
+        .btn-info { background-color: #B28DFF; border-color: #B28DFF; }
+        .btn-info:hover { background-color: #9774E1; }
+        .btn-warning { background-color: #FFBE76; border-color: #FFBE76; }
+        .btn-success { background-color: #9ADBCB; border-color: #9ADBCB; }
+        .btn-danger { background-color: #FF6F61; border-color: #FF6F61; }
+        .form-control {
+            border-radius: 15px;
+            border: 1px solid #D63384;
+            padding: 10px;
+        }
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .section-divider {
+            margin: 30px 0;
+            border-bottom: 2px dashed #FF85A2;
+        }
+    </style>
+</head>
+<body class="container mt-4">
+    <h2 class="text-center mb-4">💖 Martina's Client Tracker</h2>
+
+    <!-- 🌸 Main Actions -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <a href="/add_client" class="btn btn-primary w-100">➕ Add New Client</a>
+        </div>
+        <div class="col-md-6">
+            <a href="/clients_list" class="btn btn-info w-100">📋 View All Clients</a>
+        </div>
+    </div>
+
+    <!-- 🔍 Search Clients -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>🔍 Search Clients</h4>
+            <form method="GET" class="d-flex">
+                <input type="text" id="search_client" name="search" value="{{ search_query }}" placeholder="Search by Client Name" class="form-control me-2">
+                <button type="submit" class="btn btn-primary">🔍 Search</button>
+                <a href="/" class="btn btn-secondary ms-2">❌ Clear</a>
+            </form>
+        </div>
+    </div>
+
+    <!-- 🌷 Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <a href="/followups" class="btn btn-warning w-100">📞 Follow-ups (Next 7 Days)</a>
+        </div>
+        <div class="col-md-6">
+            <a href="/loyal_clients" class="btn btn-success w-100">🏆 Loyal Clients</a>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- 💜 Filtering & Reports -->
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>📅 Filter Clients by Visit Date</h4>
+                    <form action="/filter_by_date" method="GET">
+                        <div class="d-flex">
+                            <input type="date" name="start_date" class="form-control me-2" required>
+                            <input type="date" name="end_date" class="form-control me-2" required>
+                            <button type="submit" class="btn btn-info">🔍 Filter</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h4>💰 Income Report</h4>
+                    <form action="/income_report" method="GET">
+                        <div class="d-flex">
+                            <input type="date" name="start_date" class="form-control me-2" required>
+                            <input type="date" name="end_date" class="form-control me-2" required>
+                            <button type="submit" class="btn btn-info">📊 Generate Report</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🦋 Add New Visit -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>➕ Add Visit</h4>
+            <form action="/add_visit" method="POST">
+                <label for="client_name">Client Name:</label>
+                <input type="text" id="client_name" name="name" class="form-control mb-2" placeholder="Type to search..." required>
+
+                <label for="visit_date">Visit Date:</label>
+                <input type="date" name="visit_date" class="form-control mb-2" required>
+
+                <label for="invoice">Invoice Amount:</label>
+                <input type="number" name="invoice" step="0.01" class="form-control mb-2" placeholder="Enter Invoice Amount">
+
+                <label for="tips">Tips:</label>
+                <input type="number" name="tips" step="0.01" class="form-control mb-2" placeholder="Enter Tips">
+
+                <button type="submit" class="btn btn-success w-100">✔️ Save Visit</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ❌ Delete Visit -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h4>❌ Delete a Visit</h4>
+            <form action="/delete_visit" method="GET">
+                <label for="delete_client_name">Client Name:</label>
+                <input type="text" id="delete_client_name" name="name" class="form-control mb-2" placeholder="Type to search..." required>
+                <button type="submit" class="btn btn-danger w-100">🔍 Find Visits</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $("#search_client, #client_name, #delete_client_name").autocomplete({
+                source: function(request, response) {
+                    $.getJSON("/autocomplete", { term: request.term }, function(data) {
+                        response(data);
+                    });
+                },
+                minLength: 1
+            });
+        });
+    </script>
+</body>
+</html>

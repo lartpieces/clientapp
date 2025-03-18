@@ -1,0 +1,26 @@
+<!-- templates/inactive_clients.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inactive Clients</title>
+</head>
+<body>
+    <h1>Inactive Clients - Last Visited Over {{ months }} Month(s) Ago</h1>
+    <table border="1">
+        <tr>
+            <th>Name</th>
+            <th>Last Visit</th>
+            <th>Phone</th>
+        </tr>
+        {% for client in clients %}
+        <tr>
+            <td>{{ client.name }}</td>
+            <td>{{ client.last_visit }}</td>
+            <td>{{ client.phone }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
